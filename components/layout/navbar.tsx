@@ -32,16 +32,28 @@ export function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 lg:h-24">
+        <div className="flex items-center justify-between h-20 lg:h-28">
 
-          {/* Logo */}
-          <a href="#inicio" className="flex-shrink-0">
+          {/* Logo mobile */}
+          <a href="#inicio" className="flex-shrink-0 lg:hidden">
             <Image
               src="/images/logo/logo-white.png"
               alt="Nuboexpo – Exhibition & Stand Solutions"
               width={480}
               height={370}
-              className="h-[120px] lg:h-[24rem] w-auto"
+              className="h-28 w-auto"
+              priority
+            />
+          </a>
+
+          {/* Logo desktop */}
+          <a href="#inicio" className="flex-shrink-0 hidden lg:block">
+            <Image
+              src="/images/logo/logo-white.png"
+              alt="Nuboexpo – Exhibition & Stand Solutions"
+              width={480}
+              height={370}
+              className="h-40 w-auto"
               priority
             />
           </a>
