@@ -1,10 +1,12 @@
 "use client";
 
-import { Pencil, Settings, Hammer, Truck, Wrench, Monitor } from "lucide-react";
+import { Pencil, Settings, Hammer, Truck, Wrench, Monitor, Droplets, Download } from "lucide-react";
 import { useLanguage } from "@/shared/lib/language-context";
 import { useScrollReveal } from "@/shared/hooks/use-scroll-reveal";
 
-const icons = [Pencil, Settings, Hammer, Truck, Wrench, Monitor];
+const CATALOG_URL = "https://drive.google.com/drive/folders/TU_ENLACE_AQUI";
+
+const icons = [Pencil, Settings, Hammer, Truck, Wrench, Monitor, Droplets];
 
 function ServiceCard({
   service,
@@ -68,6 +70,18 @@ export function Services() {
               Icon={icons[index]}
             />
           ))}
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <a
+            href={CATALOG_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 bg-[#2B2B2B] hover:bg-[#F26522] text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300"
+          >
+            <Download size={16} />
+            {t.services.catalog}
+          </a>
         </div>
       </div>
     </section>

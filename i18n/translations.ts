@@ -54,7 +54,13 @@ export const translations = {
           description:
             "Alquiler de pantallas, televisores y elementos audiovisuales para complementar su espacio expositivo.",
         },
+        {
+          title: "Dispensadores de agua",
+          description:
+            "Suministro e instalación de dispensadores de agua para stands y espacios expositivos durante el evento.",
+        },
       ],
+      catalog: "Descargar catálogo",
     },
     process: {
       tag: "Metodología",
@@ -231,7 +237,13 @@ export const translations = {
           description:
             "Rental of screens, TVs and audiovisual elements to complement your exhibition space.",
         },
+        {
+          title: "Water dispensers",
+          description:
+            "Supply and installation of water dispensers for stands and exhibition spaces during the event.",
+        },
       ],
+      catalog: "Download catalogue",
     },
     process: {
       tag: "Methodology",
