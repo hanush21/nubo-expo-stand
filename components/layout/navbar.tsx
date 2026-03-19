@@ -39,9 +39,9 @@ export function Navbar() {
             <Image
               src="/images/logo/logo-white.png"
               alt="Nuboexpo – Exhibition & Stand Solutions"
-              width={280}
-              height={170}
-              className="h-20 lg:h-42 w-auto"
+              width={480}
+              height={370}
+              className="h-[100px] lg:h-[24rem] w-auto"
               priority
             />
           </a>
