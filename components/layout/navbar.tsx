@@ -32,21 +32,62 @@ export function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-36 lg:h-24">
-          {/* Logo */}
+        {/* Mobile layout: logo centered, controls absolute right */}
+        <div className="relative flex items-center justify-center h-28 lg:hidden">
+          <a href="#inicio">
+            <Image
+              src="/images/logo/logo-white.png"
+              alt="Nuboexpo – Exhibition & Stand Solutions"
+              width={280}
+              height={170}
+              className="h-24 w-auto"
+              priority
+            />
+          </a>
+          {/* Controls pinned to the right */}
+          <div className="absolute right-0 flex items-center gap-2">
+            <div className="flex items-center border border-gray-200 rounded-full p-1 gap-0.5">
+              <button
+                onClick={() => setLang("es")}
+                className={`text-xs font-bold px-2.5 py-1 rounded-full transition-all duration-200 ${
+                  lang === "es" ? "bg-[#F26522] text-white shadow-sm" : "text-gray-400 hover:text-[#2B2B2B]"
+                }`}
+              >
+                ES
+              </button>
+              <button
+                onClick={() => setLang("en")}
+                className={`text-xs font-bold px-2.5 py-1 rounded-full transition-all duration-200 ${
+                  lang === "en" ? "bg-[#F26522] text-white shadow-sm" : "text-gray-400 hover:text-[#2B2B2B]"
+                }`}
+              >
+                EN
+              </button>
+            </div>
+            <button
+              onClick={() => setOpen(!open)}
+              className="p-2 text-[#2B2B2B] hover:text-[#F26522] transition-colors"
+              aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            >
+              {open ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Desktop layout: original horizontal */}
+        <div className="hidden lg:flex items-center justify-between h-24">
           <a href="#inicio" className="flex-shrink-0">
             <Image
               src="/images/logo/logo-white.png"
               alt="Nuboexpo – Exhibition & Stand Solutions"
               width={280}
               height={170}
-              className="h-32 lg:h-42 w-auto"
+              className="h-42 w-auto"
               priority
             />
           </a>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -58,16 +99,12 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Right: lang toggle + CTA + mobile toggle */}
           <div className="flex items-center gap-3">
-            {/* Language toggle */}
             <div className="flex items-center border border-gray-200 rounded-full p-1 gap-0.5">
               <button
                 onClick={() => setLang("es")}
                 className={`text-xs font-bold px-3 py-1 rounded-full transition-all duration-200 ${
-                  lang === "es"
-                    ? "bg-[#F26522] text-white shadow-sm"
-                    : "text-gray-400 hover:text-[#2B2B2B]"
+                  lang === "es" ? "bg-[#F26522] text-white shadow-sm" : "text-gray-400 hover:text-[#2B2B2B]"
                 }`}
               >
                 ES
@@ -75,29 +112,15 @@ export function Navbar() {
               <button
                 onClick={() => setLang("en")}
                 className={`text-xs font-bold px-3 py-1 rounded-full transition-all duration-200 ${
-                  lang === "en"
-                    ? "bg-[#F26522] text-white shadow-sm"
-                    : "text-gray-400 hover:text-[#2B2B2B]"
+                  lang === "en" ? "bg-[#F26522] text-white shadow-sm" : "text-gray-400 hover:text-[#2B2B2B]"
                 }`}
               >
                 EN
               </button>
             </div>
-
-            <Button
-              asChild
-              className="hidden lg:flex bg-[#F26522] hover:bg-[#d4551a] text-white font-semibold"
-            >
+            <Button asChild className="bg-[#F26522] hover:bg-[#d4551a] text-white font-semibold">
               <a href="#contacto">{t.nav.cta}</a>
             </Button>
-
-            <button
-              onClick={() => setOpen(!open)}
-              className="lg:hidden p-2 text-[#2B2B2B] hover:text-[#F26522] transition-colors"
-              aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            >
-              {open ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
         </div>
       </div>
