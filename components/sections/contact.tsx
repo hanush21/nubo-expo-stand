@@ -5,14 +5,16 @@ import { Button } from "@/shared/ui/shadcn/button";
 import { Input } from "@/shared/ui/shadcn/input";
 import { Mail, Phone, MapPin, MessageCircle, Send, CheckCircle } from "lucide-react";
 import { useLanguage } from "@/shared/lib/language-context";
+import { useScrollReveal } from "@/shared/hooks/use-scroll-reveal";
 
-// ⚠️ Reemplaza YOUR_FORM_ID con tu ID de Formspree (formspree.io)
 const FORMSPREE_URL = "https://formspree.io/f/YOUR_FORM_ID";
 
 export function Contact() {
   const { t } = useLanguage();
   const f = t.contact.form;
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const { ref: leftRef, isVisible: leftVisible } = useScrollReveal(0.15);
+  const { ref: rightRef, isVisible: rightVisible } = useScrollReveal(0.15);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,7 +42,12 @@ export function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
           {/* Left: info */}
-          <div className="lg:col-span-2">
+          <div
+            ref={leftRef}
+            className={`lg:col-span-2 transition-all duration-700 ${
+              leftVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
+            }`}
+          >
             <span className="text-[#F26522] text-xs font-bold tracking-[0.2em] uppercase">
               {t.contact.tag}
             </span>
@@ -50,48 +57,52 @@ export function Contact() {
             <p className="text-gray-500 leading-relaxed mb-8">{t.contact.intro}</p>
 
             <div className="space-y-5">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-[#F26522]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Phone size={18} className="text-[#F26522]" />
+              {[
+                {
+                  icon: Phone,
+                  label: t.contact.phone,
+                  content: (
+                    <>
+                      <a href="tel:+34688408815" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors block">
+                        +34 688 408 815
+                      </a>
+                      <a href="tel:+34666893146" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors block">
+                        +34 666 893 146
+                      </a>
+                    </>
+                  ),
+                },
+                {
+                  icon: Mail,
+                  label: t.contact.email,
+                  content: (
+                    <a href="mailto:nuboexpo@gmail.com" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors">
+                      nuboexpo@gmail.com
+                    </a>
+                  ),
+                },
+                {
+                  icon: MapPin,
+                  label: t.contact.location,
+                  content: <span className="text-sm font-medium text-[#2B2B2B]">Barcelona, España</span>,
+                },
+              ].map(({ icon: Icon, label, content }, i) => (
+                <div
+                  key={label}
+                  className={`flex items-start gap-4 transition-all duration-500 ${
+                    leftVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  }`}
+                  style={{ transitionDelay: leftVisible ? `${i * 100 + 200}ms` : "0ms" }}
+                >
+                  <div className="w-10 h-10 bg-[#F26522]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Icon size={18} className="text-[#F26522]" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">{label}</p>
+                    {content}
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">
-                    {t.contact.phone}
-                  </p>
-                  <a href="tel:+34688408815" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors block">
-                    +34 688 408 815
-                  </a>
-                  <a href="tel:+34666893146" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors block">
-                    +34 666 893 146
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-[#F26522]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Mail size={18} className="text-[#F26522]" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">
-                    {t.contact.email}
-                  </p>
-                  <a href="mailto:nuboexpo@gmail.com" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors">
-                    nuboexpo@gmail.com
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-[#F26522]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <MapPin size={18} className="text-[#F26522]" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">
-                    {t.contact.location}
-                  </p>
-                  <span className="text-sm font-medium text-[#2B2B2B]">Barcelona, España</span>
-                </div>
-              </div>
+              ))}
 
               <a
                 href="https://wa.me/34688408815"
@@ -106,13 +117,25 @@ export function Contact() {
           </div>
 
           {/* Right: form */}
-          <div className="lg:col-span-3">
+          <div
+            ref={rightRef}
+            className={`lg:col-span-3 transition-all duration-700 ${
+              rightVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+            }`}
+            style={{ transitionDelay: rightVisible ? "150ms" : "0ms" }}
+          >
             <div className="bg-white rounded-2xl p-7 sm:p-8 shadow-sm border border-gray-100">
               {status === "sent" ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <CheckCircle size={48} className="text-[#F26522] mb-4" />
+                  {/* Animated success icon */}
+                  <div
+                    className="w-16 h-16 bg-[#F26522]/10 rounded-full flex items-center justify-center mb-4"
+                    style={{ animation: "count-in 0.5s ease forwards" }}
+                  >
+                    <CheckCircle size={36} className="text-[#F26522]" />
+                  </div>
                   <h3 className="text-xl font-bold text-[#2B2B2B] mb-2">{f.successTitle}</h3>
-                  <p className="text-gray-500 text-sm">{f.successText}</p>
+                  <p className="text-gray-500 text-sm max-w-xs">{f.successText}</p>
                   <button
                     onClick={() => setStatus("idle")}
                     className="mt-6 text-sm text-[#F26522] hover:underline"
@@ -153,13 +176,6 @@ export function Contact() {
                   </div>
 
                   <div>
-                    <label htmlFor="evento" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-                      {f.event}
-                    </label>
-                    <Input id="evento" name="evento" placeholder={f.eventPh} className="h-11 border-gray-200" />
-                  </div>
-
-                  <div>
                     <label htmlFor="mensaje" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
                       {f.message} *
                     </label>
@@ -180,9 +196,12 @@ export function Contact() {
                   <Button
                     type="submit"
                     disabled={status === "sending"}
-                    className="w-full bg-[#F26522] hover:bg-[#d4551a] text-white font-bold h-12 text-base gap-2"
+                    className="w-full bg-[#F26522] hover:bg-[#d4551a] text-white font-bold h-12 text-base gap-2 group"
                   >
-                    <Send size={16} />
+                    <Send
+                      size={16}
+                      className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
                     {status === "sending" ? f.sending : f.submit}
                   </Button>
 

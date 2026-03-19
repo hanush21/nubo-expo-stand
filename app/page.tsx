@@ -10,6 +10,7 @@ import { Stats } from "@/components/sections/stats";
 import { CtaBanner } from "@/components/sections/cta-banner";
 import { Contact } from "@/components/sections/contact";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { FloatingCta } from "@/components/ui/floating-cta";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
       </main>
       <Footer />
       <WhatsAppButton />
+      <FloatingCta />
     </LanguageProvider>
   );
 }
