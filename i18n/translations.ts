@@ -11,7 +11,7 @@ export const translations = {
       cta: "Solicitar presupuesto",
     },
     hero: {
-      badge: "Exhibition & Stand Solutions",
+      badge: "Nuboexpo · Exhibition & Stand Solutions",
       title: "Diseño y montaje de stands para ferias y eventos profesionales",
       subtitle:
         "Planificamos, producimos e instalamos su stand garantizando ejecución profesional, cumplimiento de plazos y un único interlocutor durante todo el proyecto.",
@@ -136,7 +136,7 @@ export const translations = {
     },
     contact: {
       tag: "Contacto",
-      title: "Hablemos de su stand",
+      title: "q",
       intro:
         "Si está preparando su participación en una feria o evento, cuéntenos su proyecto y le asesoraremos sin compromiso.",
       whatsapp: "Contactar por WhatsApp",
@@ -188,7 +188,7 @@ export const translations = {
       cta: "Get a quote",
     },
     hero: {
-      badge: "Exhibition & Stand Solutions",
+      badge: "Nuboexpo · Exhibition & Stand Solutions",
       title: "Stand design and installation for professional trade fairs and events",
       subtitle:
         "We plan, produce and install your stand ensuring professional execution, deadline compliance and a single point of contact throughout the entire project.",

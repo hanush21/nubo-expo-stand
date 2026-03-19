@@ -32,7 +32,7 @@ export function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 lg:h-24">
+        <div className="flex items-center justify-between h-36 lg:h-24">
           {/* Logo */}
           <a href="#inicio" className="flex-shrink-0">
             <Image
@@ -40,7 +40,7 @@ export function Navbar() {
               alt="Nuboexpo – Exhibition & Stand Solutions"
               width={280}
               height={170}
-              className="h-16 lg:h-36 w-auto"
+              className="h-32 lg:h-42 w-auto"
               priority
             />
           </a>
