@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  output: process.env.CI ? "export" : undefined,
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
