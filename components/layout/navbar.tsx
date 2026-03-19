@@ -32,20 +32,25 @@ export function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Mobile layout: logo centered, controls absolute right */}
-        <div className="relative flex items-center justify-center h-28 lg:hidden">
-          <a href="#inicio">
+        {/* Mobile layout: 3-column flex — spacer | logo | controls */}
+        <div className="flex items-center h-24 lg:hidden">
+          {/* Left spacer — mirrors controls width to keep logo centered */}
+          <div className="flex-1" />
+
+          {/* Logo centered */}
+          <a href="#inicio" className="flex-shrink-0">
             <Image
               src="/images/logo/logo-white.png"
               alt="Nuboexpo – Exhibition & Stand Solutions"
               width={280}
               height={170}
-              className="h-24 w-auto"
+              className="h-20 w-auto"
               priority
             />
           </a>
-          {/* Controls pinned to the right */}
-          <div className="absolute right-0 flex items-center gap-2">
+
+          {/* Controls on the right */}
+          <div className="flex-1 flex items-center justify-end gap-2">
             <div className="flex items-center border border-gray-200 rounded-full p-1 gap-0.5">
               <button
                 onClick={() => setLang("es")}
