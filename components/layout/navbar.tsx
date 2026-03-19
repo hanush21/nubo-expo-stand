@@ -41,7 +41,7 @@ export function Navbar() {
               alt="Nuboexpo – Exhibition & Stand Solutions"
               width={480}
               height={370}
-              className="h-[100px] lg:h-[24rem] w-auto"
+              className="h-[120px] lg:h-[24rem] w-auto"
               priority
             />
           </a>
