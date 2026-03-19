@@ -3,38 +3,48 @@
 import { useState } from "react";
 import { Button } from "@/shared/ui/shadcn/button";
 import { Input } from "@/shared/ui/shadcn/input";
-import { Mail, Phone, MapPin, MessageCircle, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle, CheckCircle } from "lucide-react";
 import { useLanguage } from "@/shared/lib/language-context";
 import { useScrollReveal } from "@/shared/hooks/use-scroll-reveal";
 
-const FORMSPREE_URL = "https://formspree.io/f/YOUR_FORM_ID";
+const WHATSAPP_NUMBER = "34632701437";
 
 export function Contact() {
   const { t } = useLanguage();
   const f = t.contact.form;
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sent">("idle");
   const { ref: leftRef, isVisible: leftVisible } = useScrollReveal(0.15);
   const { ref: rightRef, isVisible: rightVisible } = useScrollReveal(0.15);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("sending");
-    const formData = new FormData(e.currentTarget);
-    try {
-      const res = await fetch(FORMSPREE_URL, {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      });
-      if (res.ok) {
-        setStatus("sent");
-        (e.target as HTMLFormElement).reset();
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
+    const form = e.currentTarget;
+    const get = (name: string) =>
+      (form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement)?.value ?? "";
+
+    const nombre = get("nombre");
+    const empresa = get("empresa");
+    const email = get("email");
+    const telefono = get("telefono");
+    const mensaje = get("mensaje");
+
+    const text = [
+      `Hola, me pongo en contacto desde vuestra web.`,
+      ``,
+      `*Nombre:* ${nombre}`,
+      `*Empresa:* ${empresa}`,
+      `*Email:* ${email}`,
+      telefono ? `*Teléfono:* ${telefono}` : null,
+      ``,
+      `*Mensaje:*`,
+      mensaje,
+    ]
+      .filter((line) => line !== null)
+      .join("\n");
+
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
+    setStatus("sent");
+    form.reset();
   }
 
   return (
@@ -63,12 +73,10 @@ export function Contact() {
                   label: t.contact.phone,
                   content: (
                     <>
-                      <a href="tel:+34688408815" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors block">
-                        +34 688 408 815
+                      <a href="tel:+34632701437" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors block">
+                        +34 632 701 437
                       </a>
-                      <a href="tel:+34666893146" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors block">
-                        +34 666 893 146
-                      </a>
+                    
                     </>
                   ),
                 },
@@ -189,20 +197,15 @@ export function Contact() {
                     />
                   </div>
 
-                  {status === "error" && (
-                    <p className="text-sm text-red-500">{f.error}</p>
-                  )}
-
                   <Button
                     type="submit"
-                    disabled={status === "sending"}
-                    className="w-full bg-[#F26522] hover:bg-[#d4551a] text-white font-bold h-12 text-base gap-2 group"
+                    className="w-full bg-[#25D366] hover:bg-[#1dbb57] text-white font-bold h-12 text-base gap-2 group"
                   >
-                    <Send
-                      size={16}
-                      className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    <MessageCircle
+                      size={17}
+                      className="transition-transform duration-200 group-hover:scale-110"
                     />
-                    {status === "sending" ? f.sending : f.submit}
+                    Enviar por WhatsApp
                   </Button>
 
                   <p className="text-xs text-gray-400 text-center">{f.note}</p>
