@@ -32,7 +32,7 @@ export function Hero() {
         }}
       />
 
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pt-28 lg:pt-28">
+      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pt-24 lg:pt-28">
         {/* Social proof badge */}
         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full px-4 py-1.5 mb-5">
           <div className="flex gap-0.5">
