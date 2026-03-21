@@ -72,17 +72,6 @@ export function Services() {
           ))}
         </div>
 
-        <div className="mt-12 flex justify-center">
-          <a
-            href={CATALOG_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-[#2B2B2B] hover:bg-[#F26522] text-white font-semibold text-sm px-7 py-3.5 rounded-full transition-colors duration-300"
-          >
-            <Download size={16} />
-            {t.services.catalog}
-          </a>
-        </div>
       </div>
     </section>
   );

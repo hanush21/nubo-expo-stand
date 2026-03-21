@@ -10,11 +10,12 @@ import { useScrollReveal } from "@/shared/hooks/use-scroll-reveal";
 const images = [
   "/images/projects/rgblink.jpg",
   "/images/projects/aida.jpg",
-  "/images/projects/biospain.jpg",
-  "/images/projects/stand-tech.jpg",
-  "/images/projects/stand-white.jpg",
+  "/images/projects/standDelhi.jpeg",
+  "/images/projects/IMG_20251118_090115.jpg",
+  "/images/projects/IMG-20260302-WA0134.jpg",
   "/images/projects/outdoor.jpg",
 ];
+
 
 function ProjectCard({
   project,
