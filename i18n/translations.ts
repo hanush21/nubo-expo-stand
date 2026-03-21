@@ -142,7 +142,7 @@ export const translations = {
     },
     contact: {
       tag: "Contacto",
-      title: "q",
+      title: "Hablemos de su stand",
       intro:
         "Si está preparando su participación en una feria o evento, cuéntenos su proyecto y le asesoraremos sin compromiso.",
       whatsapp: "Contactar por WhatsApp",

@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook } from "lucide-react";
 import { useLanguage } from "@/shared/lib/language-context";
 
 export function Footer() {
@@ -30,6 +30,17 @@ export function Footer() {
             <p className="text-sm text-white/60 leading-relaxed max-w-xs">
               {t.footer.tagline}
             </p>
+            <div className="flex gap-3 mt-5">
+              <a
+                href="https://www.facebook.com/nuboexpo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/50 hover:text-[#F26522] transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook size={18} />
+              </a>
+            </div>
           </div>
 
           <div>
@@ -63,14 +74,15 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <Mail size={15} className="text-[#F26522] mt-0.5 flex-shrink-0" />
-                <a href="mailto:nuboexpo@gmail.com" className="text-sm text-white/70 hover:text-white transition-colors">
-                  nuboexpo@gmail.com
+                <a href="mailto:info@nuboexpo.com" className="text-sm text-white/70 hover:text-white transition-colors">
+                  info@nuboexpo.com
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={15} className="text-[#F26522] mt-0.5 flex-shrink-0" />
                 <span className="text-sm text-white/70">Barcelona, España</span>
               </li>
+              
             </ul>
           </div>
         </div>

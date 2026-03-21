@@ -84,8 +84,8 @@ export function Contact() {
                   icon: Mail,
                   label: t.contact.email,
                   content: (
-                    <a href="mailto:nuboexpo@gmail.com" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors">
-                      nuboexpo@gmail.com
+                    <a href="mailto:info@nuboexpo.com" className="text-sm font-medium text-[#2B2B2B] hover:text-[#F26522] transition-colors">
+                      info@nuboexpo.com
                     </a>
                   ),
                 },
