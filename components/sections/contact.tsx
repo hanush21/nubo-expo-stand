@@ -29,36 +29,20 @@ export function Contact() {
       const telefono = get("telefono");
       const mensaje = get("mensaje");
 
-      const htmlMessage = `
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
-          <div style="background:#F26522;padding:20px 24px;">
-            <h2 style="margin:0;color:#fff;font-size:18px;font-weight:700;">NUBOEXPO — Nuevo contacto web</h2>
-          </div>
-          <table style="width:100%;border-collapse:collapse;">
-            <tr style="border-bottom:1px solid #f3f4f6;">
-              <td style="padding:12px 24px;width:130px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Nombre</td>
-              <td style="padding:12px 24px;color:#111827;font-size:14px;">${nombre}</td>
-            </tr>
-            <tr style="border-bottom:1px solid #f3f4f6;background:#fafafa;">
-              <td style="padding:12px 24px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Empresa</td>
-              <td style="padding:12px 24px;color:#111827;font-size:14px;">${empresa}</td>
-            </tr>
-            <tr style="border-bottom:1px solid #f3f4f6;">
-              <td style="padding:12px 24px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Email</td>
-              <td style="padding:12px 24px;font-size:14px;"><a href="mailto:${email}" style="color:#F26522;text-decoration:none;">${email}</a></td>
-            </tr>
-            ${telefono ? `
-            <tr style="border-bottom:1px solid #f3f4f6;background:#fafafa;">
-              <td style="padding:12px 24px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Teléfono</td>
-              <td style="padding:12px 24px;color:#111827;font-size:14px;">${telefono}</td>
-            </tr>` : ""}
-          </table>
-          <div style="padding:20px 24px;border-top:2px solid #F26522;">
-            <p style="margin:0 0 8px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Mensaje</p>
-            <p style="margin:0;color:#111827;font-size:14px;line-height:1.6;white-space:pre-wrap;">${mensaje}</p>
-          </div>
-        </div>
-      `;
+      const formattedMessage = [
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "  NUBOEXPO — Nuevo contacto web",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "",
+        `Nombre:   ${nombre}`,
+        `Empresa:  ${empresa}`,
+        `Email:    ${email}`,
+        telefono ? `Teléfono: ${telefono}` : null,
+        "",
+        "── Mensaje ────────────────────",
+        mensaje,
+        "───────────────────────────────",
+      ].filter((l) => l !== null).join("\n");
 
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -67,7 +51,7 @@ export function Contact() {
           access_key: "220e5c11-d2c7-4241-9113-edf1cbb63884",
           name: nombre,
           email: email,
-          message: htmlMessage,
+          message: formattedMessage,
           subject: `Nuevo contacto web — ${empresa}`,
         }),
       });
@@ -149,7 +133,7 @@ export function Contact() {
               ))}
 
               <a
-                href="https://wa.me/34688408815"
+                href="https://wa.me/34632701437"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#25D366] hover:bg-[#1dbb57] transition-colors text-white rounded-lg px-5 py-3 w-fit mt-2"

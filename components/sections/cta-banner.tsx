@@ -56,7 +56,7 @@ export function CtaBanner() {
             variant="outline"
             className="border-white/50 text-white bg-transparent hover:bg-white/10 font-semibold px-8 h-14 text-base gap-2"
           >
-            <a href="https://wa.me/34688408815" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/34632701437" target="_blank" rel="noopener noreferrer">
               <MessageCircle size={16} />
               {t.cta.secondary}
             </a>
