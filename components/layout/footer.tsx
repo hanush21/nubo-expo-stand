@@ -116,10 +116,15 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/40">
-            © {new Date().getFullYear()} Nuboexpo. {t.footer.copy}
+          <div className="flex flex-col sm:flex-row items-center gap-3 text-xs text-white/40">
+            <p>© {new Date().getFullYear()} Nuboexpo. {t.footer.copy}</p>
+            <span className="hidden sm:inline text-white/20">·</span>
+            <a href="/aviso-legal" className="hover:text-white/70 transition-colors">Aviso legal · Privacidad · Cookies</a>
+          </div>
+          <p className="text-xs text-white/25">
+            Powered by{" "}
+            <span className="text-white/40 font-medium">La tienda del emprendedor</span>
           </p>
-          <p className="text-xs text-white/30">{t.footer.sub}</p>
         </div>
       </div>
     </footer>

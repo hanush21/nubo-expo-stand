@@ -24,10 +24,10 @@ export function About() {
           >
             <div className="relative h-80 sm:h-96 rounded-2xl overflow-hidden">
               <Image
-                src="/images/about/equipo.jpg"
-                alt="Equipo Nuboexpo trabajando en fabricación"
+                src="/images/projects/rgblink.jpg"
+                alt="Stand profesional RGBlink en ISE Barcelona"
                 fill
-                className="object-cover"
+                className="object-cover object-center"
               />
             </div>
             <div
@@ -37,10 +37,10 @@ export function About() {
               style={{ transitionDelay: imagesVisible ? "200ms" : "0ms" }}
             >
               <Image
-                src="/images/about/taller.jpg"
-                alt="Taller e infraestructura Nuboexpo"
+                src="/images/projects/aida.jpg"
+                alt="Stand corporativo AIDA Imaging en ISE Barcelona"
                 fill
-                className="object-cover"
+                className="object-cover object-center"
               />
             </div>
             <div
