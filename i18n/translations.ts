@@ -105,9 +105,9 @@ export const translations = {
       items: [
         { title: "RGBlink", event: "ISE Barcelona 2026", type: "Stand tecnológico · LED & AV" },
         { title: "AIDA Imaging", event: "ISE Barcelona 2026", type: "Stand corporativo · Electrónica" },
-        { title: "BIOSPAIN 2026", event: "IFEMA Madrid", type: "Stand institucional · Biotech" },
-        { title: "Stand tecnológico", event: "ISE 2026", type: "Montaje integral · Displays" },
-        { title: "Stand a medida", event: "Feria profesional 2026", type: "Diseño y fabricación propia" },
+        { title: "Fira Gran via", event: "IFEMA Madrid", type: "Stand institucional · Biotech" },
+        { title: "Bilbao enlit 2025", event: "ISE 2026", type: "Montaje integral · Displays" },
+        { title: "Colonia Alemania", event: "Feria profesional 2026", type: "Diseño y fabricación propia" },
         { title: "Evento exterior", event: "Evento corporativo 2025", type: "Espacio expositivo outdoor" },
       ],
     },

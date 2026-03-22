@@ -7,44 +7,80 @@ import { Mail, Phone, MapPin, MessageCircle, CheckCircle } from "lucide-react";
 import { useLanguage } from "@/shared/lib/language-context";
 import { useScrollReveal } from "@/shared/hooks/use-scroll-reveal";
 
-const WHATSAPP_NUMBER = "34632701437";
 
 export function Contact() {
   const { t } = useLanguage();
   const f = t.contact.form;
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const { ref: leftRef, isVisible: leftVisible } = useScrollReveal(0.15);
   const { ref: rightRef, isVisible: rightVisible } = useScrollReveal(0.15);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setStatus("sending");
     const form = e.currentTarget;
     const get = (name: string) =>
       (form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement)?.value ?? "";
 
-    const nombre = get("nombre");
-    const empresa = get("empresa");
-    const email = get("email");
-    const telefono = get("telefono");
-    const mensaje = get("mensaje");
+    try {
+      const nombre = get("nombre");
+      const empresa = get("empresa");
+      const email = get("email");
+      const telefono = get("telefono");
+      const mensaje = get("mensaje");
 
-    const text = [
-      `Hola, me pongo en contacto desde vuestra web.`,
-      ``,
-      `*Nombre:* ${nombre}`,
-      `*Empresa:* ${empresa}`,
-      `*Email:* ${email}`,
-      telefono ? `*Teléfono:* ${telefono}` : null,
-      ``,
-      `*Mensaje:*`,
-      mensaje,
-    ]
-      .filter((line) => line !== null)
-      .join("\n");
+      const htmlMessage = `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
+          <div style="background:#F26522;padding:20px 24px;">
+            <h2 style="margin:0;color:#fff;font-size:18px;font-weight:700;">NUBOEXPO — Nuevo contacto web</h2>
+          </div>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr style="border-bottom:1px solid #f3f4f6;">
+              <td style="padding:12px 24px;width:130px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Nombre</td>
+              <td style="padding:12px 24px;color:#111827;font-size:14px;">${nombre}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f3f4f6;background:#fafafa;">
+              <td style="padding:12px 24px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Empresa</td>
+              <td style="padding:12px 24px;color:#111827;font-size:14px;">${empresa}</td>
+            </tr>
+            <tr style="border-bottom:1px solid #f3f4f6;">
+              <td style="padding:12px 24px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Email</td>
+              <td style="padding:12px 24px;font-size:14px;"><a href="mailto:${email}" style="color:#F26522;text-decoration:none;">${email}</a></td>
+            </tr>
+            ${telefono ? `
+            <tr style="border-bottom:1px solid #f3f4f6;background:#fafafa;">
+              <td style="padding:12px 24px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Teléfono</td>
+              <td style="padding:12px 24px;color:#111827;font-size:14px;">${telefono}</td>
+            </tr>` : ""}
+          </table>
+          <div style="padding:20px 24px;border-top:2px solid #F26522;">
+            <p style="margin:0 0 8px;color:#6b7280;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Mensaje</p>
+            <p style="margin:0;color:#111827;font-size:14px;line-height:1.6;white-space:pre-wrap;">${mensaje}</p>
+          </div>
+        </div>
+      `;
 
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
-    setStatus("sent");
-    form.reset();
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "220e5c11-d2c7-4241-9113-edf1cbb63884",
+          name: nombre,
+          email: email,
+          message: htmlMessage,
+          subject: `Nuevo contacto web — ${empresa}`,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("sent");
+        form.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -199,14 +235,15 @@ export function Contact() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-[#25D366] hover:bg-[#1dbb57] text-white font-bold h-12 text-base gap-2 group"
+                    disabled={status === "sending"}
+                    className="w-full bg-[#F26522] hover:bg-[#d9561e] text-white font-bold h-12 text-base"
                   >
-                    <MessageCircle
-                      size={17}
-                      className="transition-transform duration-200 group-hover:scale-110"
-                    />
-                    Enviar por WhatsApp
+                    {status === "sending" ? f.sending : f.submit}
                   </Button>
+
+                  {status === "error" && (
+                    <p className="text-xs text-red-500 text-center">{f.error}</p>
+                  )}
 
                   <p className="text-xs text-gray-400 text-center">{f.note}</p>
                 </form>
