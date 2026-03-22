@@ -1,26 +1,58 @@
 "use client";
 
 import { useState } from "react";
+import { z } from "zod";
 import { Button } from "@/shared/ui/shadcn/button";
 import { Input } from "@/shared/ui/shadcn/input";
 import { Mail, Phone, MapPin, MessageCircle, CheckCircle } from "lucide-react";
 import { useLanguage } from "@/shared/lib/language-context";
 import { useScrollReveal } from "@/shared/hooks/use-scroll-reveal";
 
+const contactSchema = z.object({
+  nombre: z.string().min(2, "Mínimo 2 caracteres"),
+  empresa: z.string().min(2, "Mínimo 2 caracteres"),
+  email: z.string().email("Email no válido"),
+  telefono: z.string().regex(/^[+\d\s\-()]{7,}$/, "Teléfono no válido").or(z.literal("")),
+  mensaje: z.string().min(10, "Mínimo 10 caracteres"),
+});
+
+type ContactErrors = Partial<Record<keyof z.infer<typeof contactSchema>, string>>;
+
 
 export function Contact() {
   const { t } = useLanguage();
   const f = t.contact.form;
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errors, setErrors] = useState<ContactErrors>({});
   const { ref: leftRef, isVisible: leftVisible } = useScrollReveal(0.15);
   const { ref: rightRef, isVisible: rightVisible } = useScrollReveal(0.15);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("sending");
     const form = e.currentTarget;
     const get = (name: string) =>
       (form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement)?.value ?? "";
+
+    const parsed = contactSchema.safeParse({
+      nombre: get("nombre"),
+      empresa: get("empresa"),
+      email: get("email"),
+      telefono: get("telefono"),
+      mensaje: get("mensaje"),
+    });
+
+    if (!parsed.success) {
+      const fieldErrors: ContactErrors = {};
+      for (const issue of parsed.error.issues) {
+        const field = issue.path[0] as keyof ContactErrors;
+        if (!fieldErrors[field]) fieldErrors[field] = issue.message;
+      }
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setErrors({});
+    setStatus("sending");
 
     try {
       const nombre = get("nombre");
@@ -133,7 +165,7 @@ export function Contact() {
               ))}
 
               <a
-                href="https://wa.me/34632701437"
+                href="https://wa.me/34632701437?text=Hola%2C%20estoy%20interesado.."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#25D366] hover:bg-[#1dbb57] transition-colors text-white rounded-lg px-5 py-3 w-fit mt-2"
@@ -178,13 +210,15 @@ export function Contact() {
                       <label htmlFor="nombre" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
                         {f.name} *
                       </label>
-                      <Input id="nombre" name="nombre" placeholder={f.namePh} required className="h-11 border-gray-200" />
+                      <Input id="nombre" name="nombre" placeholder={f.namePh} className={`h-11 border-gray-200 ${errors.nombre ? "border-red-400" : ""}`} />
+                      {errors.nombre && <p className="text-xs text-red-500 mt-1">{errors.nombre}</p>}
                     </div>
                     <div>
                       <label htmlFor="empresa" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
                         {f.company} *
                       </label>
-                      <Input id="empresa" name="empresa" placeholder={f.companyPh} required className="h-11 border-gray-200" />
+                      <Input id="empresa" name="empresa" placeholder={f.companyPh} className={`h-11 border-gray-200 ${errors.empresa ? "border-red-400" : ""}`} />
+                      {errors.empresa && <p className="text-xs text-red-500 mt-1">{errors.empresa}</p>}
                     </div>
                   </div>
 
@@ -193,13 +227,15 @@ export function Contact() {
                       <label htmlFor="email" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
                         {f.email} *
                       </label>
-                      <Input id="email" name="email" type="email" placeholder={f.emailPh} required className="h-11 border-gray-200" />
+                      <Input id="email" name="email" type="email" placeholder={f.emailPh} className={`h-11 border-gray-200 ${errors.email ? "border-red-400" : ""}`} />
+                      {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
                     </div>
                     <div>
                       <label htmlFor="telefono" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
                         {f.phone}
                       </label>
-                      <Input id="telefono" name="telefono" type="tel" placeholder={f.phonePh} className="h-11 border-gray-200" />
+                      <Input id="telefono" name="telefono" type="tel" placeholder={f.phonePh} className={`h-11 border-gray-200 ${errors.telefono ? "border-red-400" : ""}`} />
+                      {errors.telefono && <p className="text-xs text-red-500 mt-1">{errors.telefono}</p>}
                     </div>
                   </div>
 
@@ -213,8 +249,9 @@ export function Contact() {
                       rows={4}
                       placeholder={f.messagePh}
                       required
-                      className="w-full rounded-md border border-gray-200 bg-white px-3 py-2.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F26522] focus:border-transparent resize-none"
+                      className={`w-full rounded-md border bg-white px-3 py-2.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F26522] focus:border-transparent resize-none ${errors.mensaje ? "border-red-400" : "border-gray-200"}`}
                     />
+                    {errors.mensaje && <p className="text-xs text-red-500 mt-1">{errors.mensaje}</p>}
                   </div>
 
                   <Button
