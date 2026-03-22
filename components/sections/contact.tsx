@@ -61,21 +61,6 @@ export function Contact() {
       const telefono = get("telefono");
       const mensaje = get("mensaje");
 
-      const formattedMessage = [
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        "  NUBOEXPO — Nuevo contacto web",
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
-        "",
-        `Nombre:   ${nombre}`,
-        `Empresa:  ${empresa}`,
-        `Email:    ${email}`,
-        telefono ? `Teléfono: ${telefono}` : null,
-        "",
-        "── Mensaje ────────────────────",
-        mensaje,
-        "───────────────────────────────",
-      ].filter((l) => l !== null).join("\n");
-
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -83,7 +68,9 @@ export function Contact() {
           access_key: "220e5c11-d2c7-4241-9113-edf1cbb63884",
           name: nombre,
           email: email,
-          message: formattedMessage,
+          company: empresa,
+          phone: telefono || undefined,
+          message: mensaje,
           subject: `Nuevo contacto web — ${empresa}`,
         }),
       });
