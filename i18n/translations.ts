@@ -171,6 +171,9 @@ export const translations = {
         successBack: "Enviar otro mensaje",
         error:
           "Ha ocurrido un error. Por favor inténtelo de nuevo o contáctenos directamente.",
+        privacy: "He leído y acepto la ",
+        privacyLink: "Política de Privacidad",
+        privacyError: "Debe aceptar la política de privacidad",
         note: "También puede contactarnos directamente por WhatsApp para una respuesta más rápida.",
       },
     },
@@ -354,6 +357,9 @@ export const translations = {
         successBack: "Send another message",
         error:
           "An error occurred. Please try again or contact us directly.",
+        privacy: "I have read and accept the ",
+        privacyLink: "Privacy Policy",
+        privacyError: "You must accept the privacy policy",
         note: "You can also contact us directly on WhatsApp for a faster response.",
       },
     },

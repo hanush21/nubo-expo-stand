@@ -14,6 +14,7 @@ const contactSchema = z.object({
   email: z.string().email("Email no válido"),
   telefono: z.string().regex(/^[+\d\s\-()]{7,}$/, "Teléfono no válido").or(z.literal("")),
   mensaje: z.string().min(10, "Mínimo 10 caracteres"),
+  privacidad: z.boolean().refine(val => val === true, { message: "Debe aceptar la política de privacidad" }),
 });
 
 type ContactErrors = Partial<Record<keyof z.infer<typeof contactSchema>, string>>;
@@ -39,6 +40,7 @@ export function Contact() {
       email: get("email"),
       telefono: get("telefono"),
       mensaje: get("mensaje"),
+      privacidad: (form.elements.namedItem("privacidad") as HTMLInputElement)?.checked ?? false,
     });
 
     if (!parsed.success) {
@@ -239,6 +241,24 @@ export function Contact() {
                       className={`w-full rounded-md border bg-white px-3 py-2.5 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F26522] focus:border-transparent resize-none ${errors.mensaje ? "border-red-400" : "border-gray-200"}`}
                     />
                     {errors.mensaje && <p className="text-xs text-red-500 mt-1">{errors.mensaje}</p>}
+                  </div>
+
+                  <div>
+                    <div className="flex items-start gap-2">
+                      <input
+                        type="checkbox"
+                        id="privacidad"
+                        name="privacidad"
+                        className="mt-0.5 h-4 w-4 flex-shrink-0 rounded border-gray-300 accent-[#F26522]"
+                      />
+                      <label htmlFor="privacidad" className="text-xs text-gray-500 leading-relaxed">
+                        {f.privacy}
+                        <a href="/aviso-legal" target="_blank" rel="noopener noreferrer" className="text-[#F26522] hover:underline">
+                          {f.privacyLink}
+                        </a>
+                      </label>
+                    </div>
+                    {errors.privacidad && <p className="text-xs text-red-500 mt-1">{errors.privacidad}</p>}
                   </div>
 
                   <Button
