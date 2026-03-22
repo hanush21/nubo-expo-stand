@@ -32,7 +32,7 @@ export function Footer() {
             </p>
             <div className="flex gap-4 mt-5">
               <a
-                href="https://www.facebook.com/nuboexpo"
+                href="https://www.facebook.com/nuboexpospain"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/50 hover:text-[#F26522] transition-colors"
