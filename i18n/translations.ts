@@ -12,6 +12,7 @@ export const translations = {
     },
     hero: {
       badge: "Nuboexpo · Exhibition & Stand Solutions",
+      socialProof: "+50 empresas confían en Nuboexpo",
       title: "Diseño y montaje de stands para ferias y eventos profesionales",
       subtitle:
         "Planificamos, producimos e instalamos su stand garantizando ejecución profesional, cumplimiento de plazos y un único interlocutor durante todo el proyecto.",
@@ -198,6 +199,7 @@ export const translations = {
     },
     hero: {
       badge: "Nuboexpo · Exhibition & Stand Solutions",
+      socialProof: "+50 companies trust Nuboexpo",
       title: "Stand design and installation for professional trade fairs and events",
       subtitle:
         "We plan, produce and install your stand ensuring professional execution, deadline compliance and a single point of contact throughout the entire project.",

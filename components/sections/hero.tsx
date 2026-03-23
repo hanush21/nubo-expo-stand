@@ -41,7 +41,7 @@ export function Hero() {
             ))}
           </div>
           <span className="text-white/80 text-xs font-medium">
-            +50 empresas confían en Nuboexpo
+            {t.hero.socialProof}
           </span>
         </div>
 
